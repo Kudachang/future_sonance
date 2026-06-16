@@ -1,0 +1,136 @@
+# Hello Mellow MV Development Log
+---
+  In chronological order, latest first.
+---
+  
+# Session Summary — The Muse / Hello Mellow MV (Mercedes Scene, Start/End Frames + Lip-Sync) Date & time: June 16, 2026, 7:35 PM UTC+8
+
+## Context
+Continuation of the Muse/Mercedes scene work (see prior session summary doc for original character build). This session focused on: (1) locking a consistent start frame + end frame pair for the camera push-in shot, and (2) attempting lip-sync of Muse01.wav onto the resulting video.
+
+---
+
+## 01. LOCKED ASSETS — FINAL CONFIRMED STATE
+
+**START FRAME (locked, confirmed "Happy with both - YES"):**
+`9507a6f5-59c4-4455-ab56-cc6c68a64c8b`
+Wide extreme fisheye shot. Muse seated centered on the hood of the neon yellow 1970 Mercedes-Benz 280SL, dead-on symmetrical, inside the seamless glowing yellow James Turrell ganzfeld room. Full-bleed, no vignette. Mercedes star logo unobstructed. Full yellow wardrobe + both necklaces + afro correct.
+
+**END FRAME (locked, confirmed "Happy with both - YES"):**
+`79ecc1cd-cfd8-46ca-ab69-93e5a6b096df`
+Close-up of Muse's face. Expression: content, mellow, chilling — not a care in the world, lips closed, soft eyes. Same yellow ambient lighting/background as start frame.
+
+**Locked character/face reference (used as anchor across generations):**
+`6d8ec6ce-5afb-4fc8-b2c9-f1762f186994` — "almost perfect" full-body character lock (North Asian mixed-race, heterochromia, afro, full wardrobe).
+
+**Other reusable face anchors:**
+- `51eedc7c-2d14-406c-8cc5-eb2f71bdec85` — preferred close-up face/sunglasses reference (Bill's favorite)
+- `e357bae7-c28c-449e-8644-dc66bb10b1f8` — macro beauty shot, used specifically for correct heterochromia eye-color reference (no sunglasses obstruction)
+- `c0dff405-0133-4c47-9a2e-2a919a0a1be7`, `459ae96c-f6d8-41b7-ab9e-b0f1a2c6f6f0` — additional macro/close-up face refs from the buzz-cut Soul library
+
+**Soul 2.0 character ID (current/correct):**
+`c7b3ea36-1c60-4a5d-8e07-ec8b1aa8c6aa` (name: "The Muse2" per Higgsfield UI). Note: an OLDER soul_id `4b6c5187-64db-4a93-a17c-c4a59ce986ee` referenced in the prior session is now stale/throws "Character not found" — always use `c7b3ea36`.
+
+**Elements (Higgsfield):**
+- `@Yellow-Mercedes` car+room — element `1796dea4-6d81-4cbf-a780-9c84b9ccbbec`; clean car-in-room reference image `51058be4-c624-4567-814f-5ec711e14509`
+- `@Muse-Yellow-Wardrobe` — element `dba8381e-91d7-4a24-8c32-37d97713b6b8`; clean ghost-mannequin wardrobe-only reference `87ea6004-bf03-46c7-8eaa-29cf6064a72a`
+- Approved scene composition (car/room/camera angle/lighting, used as a scene-only reference): `a72bc7e0-ce0e-4532-a5d7-f09f1c2f5c57`
+
+**Buzz-cut Soul 2.0 reference library:** ~29 generations covering multiple angles (front/3-4/profile/half-body), 3 lens looks (85mm portrait, 35mm documentary, macro), and ~16 expressions (cool, sad, cute, grumpy, happy, big laugh, badass, attitude, crying, surprised, sleepy, furious, smoldering, cheerful, dramatic, content). All generated under soul_id `c7b3ea36`, white background, white swimsuit, no accessories — useful as a face/expression bank for any future regeneration. Individual job IDs not all retained in this log; re-derive via `show_generations` or `show_medias` filtered to that session window if needed.
+
+---
+
+## 02. KEY WORKFLOW LEARNINGS (read before regenerating anything)
+
+1. **Never chain edits.** Feeding a previously-generated image back into GPT Image 2 / Nano Banana repeatedly as an "edit base" causes visible degradation (spots, pixelation) within 2-3 passes. Always generate **fresh** from clean original reference images + a full text description. If a fix is needed, restate the full scene from scratch rather than editing on top.
+2. **Soul 2.0** (`soul_id`) reliably locks face identity but handles complex wardrobe/scene composition poorly — outputs look "off."
+3. **Nano Banana Pro / Nano Banana 2** respects `<<<element_id>>>` for wardrobe/car well but does **not** reliably hold a Soul-locked face — it tends to regenerate its own face even when a Soul character is referenced.
+4. **GPT Image 2** (`gpt_image_2`) is the most reliable model for this pipeline. It follows long, explicit, itemized prompts precisely — labeling each input image ("Image 1 = face ref," "Image 2 = eye-color ref," "Image 3 = scene ref") and spelling out details in full sentences (exact heterochromia per eye, "North Asian mixed-race," "lips fully closed," etc.) gets the most accurate results. Use `quality: "high"`, `resolution: "4k"`.
+5. Getting the face to read as **North Asian** (not generic Asian, not Western, not African) required explicitly naming Mongolian/Northern Chinese bone structure, high wide cheekbones, Mongolian fold, broad flat facial planes — generic "Asian" prompting drifted away from this.
+6. Getting a **seamless yellow ganzfeld background** (no lines/seams/corners) required explicitly banning "lines, seams, corners, architectural details" and describing it as an "infinite glowing yellow void."
+
+---
+
+## 03. VIDEO / LIP-SYNC ATTEMPTS — RESULTS
+
+| Model/Tool | Result | Verdict |
+|---|---|---|
+| **Wan 2.7** (start_image + audio) | Only accepts 2 media inputs max (start+end+audio together = validation error). When run with start_image + audio, it regenerated the face entirely — lost identity, looked Middle Eastern. | ❌ Abandoned |
+| **Seedance 2.0** (start+end+audio) | Mechanically succeeds but re-synthesizes/alters the audio — sung lyrics/melody drift from Muse01.wav. Confirms same finding as prior session. | ❌ Confirmed dead end (again) |
+| **Kling 3.0 Pro** (silent, start_image + end_image, sound off) | Clean, stable push-in motion, identity preserved from both locked frames. Two 15s variants generated: `5edaf33f-19fc-4059-81ff-69235b7ca114` and `1903b92e-8865-456b-a390-256e5ae3515a` ("2nd one has more attitude" — Bill's read). | ✅ **This is the silent base video to use.** |
+| **Jimeng (即梦) 对口型 Basic Mode** | Has the right feature (video up to 36s + local audio upload) but blocked by a real-person face-verification gate: *"识别到你上传的素材中包含人脸信息，请调整素材后再试试"* — Muse is a photorealistic AI face with no real person to verify. | ❌ Not viable for this character |
+| **HeyGen** | Investigated live in-browser. Built around avatar creation (Clone a real person / Upload photo / Design with AI), not direct arbitrary-video + arbitrary-audio lip-sync. Does not fit this use case. | ❌ Wrong tool, abandoned |
+| **Sync.so (Sync Labs)** | Correct tool for this job — direct video+audio lip-sync, no avatar creation/transcription step. Bill already has an account (Hobbyist $5/mo shown as "current plan"); agreed to upgrade to Creator ($19/mo) for one month to get watermark-free output. | ⏳ **Not yet attempted — next step** |
+
+---
+
+## 04. AUDIO
+
+- **Original:** `Muse01.wav` (12s, Suno-generated, vocal + music mixed). Uploaded to Higgsfield as media_id `8a74c8ea-fcdb-4f47-a151-6e84b70571dd`.
+- **Diagnosis:** lip-sync imprecision suspected to be caused by vocal+music being mixed together, making it harder for sync models to lock onto vocal cadence.
+- **True neural source separation (Demucs) attempted in-sandbox — failed.** Model weight download blocked by network egress restrictions (HTTP 403 on the model checkpoint host). This limitation would likely also block any local AI-separation plugin run via Cowork/Audacity for the same reason.
+- **DSP-based vocal-emphasis fallback produced instead** (center-channel extraction + presence-range EQ boost + compression), two versions:
+  - `Muse01_vocal_emphasis.wav` — moderate pass
+  - `Muse01_vocal_emphasis_v2.wav` — more aggressive pass (heavier bass/treble cut, stronger 2.8kHz/3.8kHz presence boost, stronger compression)
+  - **⚠️ These files exist only in this session's sandbox (`/mnt/user-data/outputs/`) and were delivered via download — they will NOT persist into a new chat.** Bill should keep local copies; re-upload to Higgsfield/Sync.so directly from his machine.
+- **If DSP emphasis still isn't clean enough:** escalate to a real neural separator — **LALAL.AI** or **vocalremover.org** (web-based, not subject to the sandbox's network restrictions) — for a true isolated vocal stem, then feed that into Sync.so.
+- **Old unidentified audio files still in Higgsfield library** (filenames not stored, can't confirm which is Muse01): `1784beac-b358-496f-a0e4-044ffd6d023a`, `4abf59d9-3f8a-4a34-a7e6-36598ab3032a`, `3ec5a2d6-4d82-47ff-b59b-0f8b3a4a6e7c`, `294e464a-a1af-4a14-a2d4-69ca53d127b6`, `d3930677-1d1e-428c-b359-50409329a95f`, `b5dd1a3a-e2fb-4e02-9e3e-e23dc9b15849`. Bill intended to delete these manually via the Higgsfield web UI (no delete tool available via MCP).
+
+---
+
+## 05. IMMEDIATE NEXT STEPS
+
+1. Download the preferred Kling 3.0 Pro silent video (`5edaf33f` or `1903b92e` — Bill leaning toward the 2nd for "more attitude").
+2. Go to **Sync.so**, confirm/complete the Creator ($19/mo) upgrade for watermark-free output.
+3. Upload the silent Kling video + try `Muse01_vocal_emphasis_v2.wav` first (most aggressive vocal isolation attempt). Fall back to `_v1` or raw `Muse01.wav` if v2 sounds too processed/artifacted for the sync model.
+4. If lip-sync precision is still off, get a true isolated vocal stem from LALAL.AI and retry on Sync.so.
+5. Once a clean lip-synced result lands, this completes the Muse segment of the Hello Mellow MV, pairing with the already-completed Soloist segment.
+6. Manually delete the unidentified old audio files from the Higgsfield media library when convenient.
+
+---
+*Generated end of session, June 16, 2026, 7:35 PM UTC+8 — for continuity into a new chat.*
+
+---
+
+# Session Summary — The Muse / Hello Mellow MV (Soloist & Mercedes Scene) Date: June 16, 2026
+
+## Context
+This session built **"The Muse"** — the second character for the Hello Mellow MV (Solo Heart Club / FUTURE SONANCE), to pair with The Soloist's already-completed part. Concept: Muse sits on the hood of a neon-yellow 1970 Mercedes-Benz 280SL inside a James Turrell–style all-yellow room, lip-syncing to camera with a fisheye lens.
+
+## The Muse — Locked Identity
+- **Face:** primarily North Asian, mixed-race, heterochromia (one pale blue eye, one green eye — Bowie style), warm light-to-medium brown skin with visible natural texture/freckles, sharp features.
+- **Locked face references (job IDs):** `b3e9c149-7f0d-46ce-88e5-b6cbb40544f6` and `237583b1-7a92-4802-b692-2ab6f5717ab7` are the definitive identity anchors. `1e280f34-de07-444d-8502-d11c812e80a6` is the locked afro silhouette reference.
+- **Hairstyles built:** original straight, hair bun, **big 1970s halo afro (primary for this scene)**, and a buzz-cut alternate (with 7 expression variants + white bikini 4-angle turnaround for Soul training).
+- **Soul character trained:** "The Muse" — 43 photos, ready. Element ID: `4b6c5187-64db-4a93-a17c-c4a59ce986ee`.
+
+## Wardrobe ("AFRO MUSE" yellow outfit)
+Short mini yellow silk qipao (mandarin collar, side slit) with a **subtle tonal yellow-on-yellow jacquard pattern using the FUTURE "F" logo** (corrected away from a Fendi FF-Zucca look — IP concern resolved by using a non-diagonal repeat grid). Black leggings with yellow side stripes, yellow Onitsuka Tiger sneakers, round yellow sunglasses, yellow nail polish, yellow G-Shock watch, silver rings.
+**Outstanding fix:** should have **TWO distinct necklaces** — short silver curb-link choker + separate extra-long yellow pearl necklace. Still being corrected as of last generation.
+**Element ID:** `dba8381e-91d7-4a24-8c32-37d97713b6b8` (@Muse-Yellow-Wardrobe, includes ghost-mannequin floating version).
+
+## Vehicle & Set
+1970 Mercedes-Benz 280SL recolored to **neon yellow**, placed in a minimalistic **James Turrell–style room** — all four walls/ceiling/floor yellow, diffused glowing ambient light (ganzfeld effect), no visible fixtures. Car's chrome/glass/interior lit by and reflecting the room's ambient glow (not separately studio-lit).
+**Element ID:** `1796dea4-6d81-4cbf-a780-9c84b9ccbbec` (@Yellow-Mercedes).
+
+## Hero Shot Composition
+Car centered, dead-on front view, perfectly symmetrical. Muse sits on the hood, centered, facing camera, high-fashion "casual-cool with attitude" pose, holding a **glass of rum on the rocks with a lemon slice** (kept generic — avoided Bacardi branding for trademark reasons). **Extreme wide-angle fisheye lens.**
+
+**Current best/locked frame:** `87d21029-b438-423c-9e98-30d6bb34cf34` — face/wardrobe/car/room all correct. Two open fixes in progress: (1) remove the black circular fisheye vignette (full-bleed), (2) add the second necklace. Latest regen attempts: `2059b1ab-7ab8-42e1-a638-10731e242213` and `f5d228e5-af41-4156-8407-52f26aee70cb` (results not yet confirmed).
+
+## Lip-Sync / Video — Key Learnings
+- **Audio:** Muse01.wav — a vocal stem trimmed in Audacity from Hello Mellow's "Audio 1" track (~12–14s segment).
+- **Wan 2.7:** repeatedly failed on this combo (auto-refunds, no cost).
+- **Seedance 2.0:** technically works (720p and 1080p both succeed with `start_image + audio`, std mode). **BUT** it re-synthesizes/alters the audio rather than passthrough — the sung lyrics/melody drift from the original Muse01.wav. This is a model limitation, not a prompt issue.
+- `start_image + end_image + audio` together at 1080p = unstable/fails repeatedly. `start_image + audio` alone = works (mechanically).
+- **Recommended path forward (Option B):** generate a **silent performance video** (mouth moving expressively, no audio input to the model) using the start/end frame pair, then run that silent clip through an **external dedicated lip-sync tool** (e.g. Sync Labs, Wav2Lip) with the original unmodified Muse01.wav. This preserves the exact vocal.
+
+## Immediate Next Steps
+1. Finalize the corrected **start frame** (vignette removed, both necklaces, face/eyes untouched).
+2. Generate a matching **end frame** (close-up, same setting/lighting, full-bleed fisheye) — Bill will derive this from the finalized start frame.
+3. Bill will test the start/end frame pair himself on Higgsfield (Seedance 2.0 push-in) with Muse01.wav.
+4. If lyric-drift persists, pivot to Option B (silent generation + external lip-sync pass).
+5. Cinema Studio confirmed **not** viable for audio/lip-sync (no audio media role) — Seedance 2.0 / Wan 2.7 are the only audio-conditioned options in Higgsfield currently.
+
+---
+
+*Generated end of session, June 15, 2026 — for continuity into a new chat.*

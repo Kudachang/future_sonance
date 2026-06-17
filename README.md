@@ -10,7 +10,8 @@ Updated Jun 17, 2026.
 ---
 ### Structure
 1. FUTURE is the master brand.
-2. FUTURE SONANCE is the MUSIC LABEL under FUTURE.
+2. FUTURE SONANCE is the MUSIC LABEL under FUTURE.FUTURE is the English name for 上海炜禾文化传播有限公司
+I am a Hong Kong citizen, not a China Mainland citizen.
 3. There are 3 artists under FUTURE SONANCE:
 	a) The Soloist - he is the semi-personal artisti/ musical exportion
 	b) The Muse - according to AI,a female AI musician has higher chance of gaining popolarity, she is currently the supporting vocal for SOloist, but will launch her own songs eventually.

@@ -1,8 +1,91 @@
 # Hello Mellow MV Development Log
 ---
-  In chronological order, latest first.
+
+In chronological order, latest first.
+
 ---
-  
+
+# Session Summary — The Muse / Hello Mellow MV (Part 2: Brown Spot Cleanup, Wheel Logo, Sync.so)
+Date: June 17–18, 2026
+
+## Context
+Continuation of Part 2 (Muse + Tiger tribute scene) of the Hello Mellow MV. This session focused on (1) cleaning up a baked-in render artifact in the Higgsfield orbit video, (2) diagnosing a wheel hub logo error, and (3) tracking Sync.so lip-sync progress. Ends with two open items for next session.
+
+---
+
+## 01. BROWN SPOT ARTIFACT — STATUS: MOSTLY RESOLVED, ONE HARD LIMIT REMAINS
+
+**Root cause (confirmed):** a soft, blurred grayish-brown ghosting artifact baked into the original Higgsfield Kling 3.0 orbit render itself — NOT introduced by Sync.so, NOT introduced by Jianying. Visible intermittently as the camera orbits, sometimes overlapping Muse's hair/face silhouette.
+
+**Method (Python/OpenCV, run in sandbox — no Higgsfield video-inpainting tool exists in Claude's MCP toolset):**
+- Per-frame: classify confirmed background via HSV saturation > 0.85 & value > 120.
+- Connected-components analysis isolates the artifact as a blob separate from the character/cat.
+- Hard safety clamp: zero the fill anywhere it overlaps a dilated buffer around the character mask.
+- Any frame where the artifact can't be cleanly isolated from her silhouette is SKIPPED rather than risking distortion.
+
+**Delivered files (in /mnt/user-data/outputs/ from this session):**
+- `hello-mellow-muse-scene2-fixed.mp4` — full 361-frame / 15.07s video, original frame idx ~158–211 cleaned.
+- `muse-scene2-onset-partial-fix.mp4` — 39-frame clip matching Bill's own re-trim, extends the fix slightly earlier (idx158–171).
+- `muse-scene2-first10s-1080p.mp4` — 1080p downscale of the first 10s, made specifically because Higgsfield's Kling 3.0 Omni Edit / Kling O1 web tool caps uploads at 2160px and the source is native 4K (3840×2160).
+
+**Hard limit identified (NOT fixed by Claude's pipeline):** roughly original frame idx 132–157 (t≈5.5–6.5s). In this window the artifact's pixels genuinely overlap/touch her hair silhouette — confirmed via connected-component analysis even after erosion testing up to 15px (artifact + hair remain one merged blob, not just close). This is the same root cause that made Jianying's "AI remove" distort her face. Decision: left untouched rather than risk damaging her hair/face.
+
+**Parallel track — Higgsfield's web-app "Kling 3.0 Omni Edit":** confirmed via web search to be a real, separate product feature (prompt-based video editing, element removal, local repaint) — NOT exposed through the Higgsfield MCP tools Claude has access to. Bill used it directly in-browser. Hit a "video exceeds 2160px" error on the native 4K file, resolved with the 1080p first-10s clip above. Bill uploaded a Muse face reference into the tool's image slot; Claude iterated on prompt wording emphasizing: face reference for identity only (not pose, since her head turns through the clip), explicit hair-silhouette preservation right where the smudge sits closest, and no alteration to the cat.
+
+**Latest from Bill (this session, unverified by Claude):** a Sync.so lip-synced output "looks good, no brown spot." Not yet confirmed which fix actually resolved it (Kling Omni Edit pass, or something else) — no file was shared in this message. **Worth re-confirming at the start of next session if a file is shared.**
+
+---
+
+## 02. WHEEL HUB LOGO — DIAGNOSED, FIX NOT YET ATTEMPTED
+
+**Issue:** wheel hub caps show the wrong emblem.
+
+**Confirmed via direct frame inspection** (original source video, frame n=130, side-profile angle): the hub cap currently shows a plain **five-pointed star**, not the Mercedes-Benz three-pointed star. Bill's complaint is correct.
+
+**Reference note:** Bill referred to "the car image upload prior of the 280SL." No real photo of an actual 280SL exists in his uploads (checked all files — only Tiger photos + the AI-generated Part-1 hero shot `1781619796450_image.png`). That hero shot's front grille DOES show the correct 3-point star, just not the wheels at that angle. Working assumption: Bill meant that same correct grille star as the style reference, not a separate real-world photo — **not yet confirmed by Bill, worth double-checking.**
+
+**Recommended fix path:** NOT a good candidate for Claude's frame-by-frame OpenCV pipeline — the wheel is a rotating 3D surface across many angles through the orbit, would need per-frame perspective-matched overlay (fragile, high effort, low quality ceiling). Recommended instead: a second, separate Kling 3.0 Omni Edit pass (same tool, same workflow Bill is already using). Draft prompt given to Bill:
+
+> "Replace the five-pointed star on both wheel hub caps with the correct Mercedes-Benz logo: a three-pointed star inside a circle, chrome-colored, matching the star already on the front grille. Keep the hubcap shape, size, chrome finish, and wheel rotation/motion exactly the same — only change the emblem inside."
+
+Recommended as a separate generation from the brown-spot fix (not combined in one prompt) to keep each edit focused and easier to verify independently.
+
+**Status: not yet attempted by Bill as of end of this session.**
+
+---
+
+## 03. NEW / OPEN ISSUE — "Muse face, Part 2" (TOP PRIORITY FOR NEXT SESSION)
+
+Bill's closing note: *"still not happy with The Muse face on part two of her."* No further detail given — no timestamp, no description of what's wrong (likeness drift? expression? asymmetry? something else?), no file attached.
+
+**This is the top open item to resolve first in the next session.** Needs from Bill:
+1. Which exact moment/frame in Part 2 he means.
+2. What specifically looks wrong about the face there.
+3. Ideally a screenshot or frame grab.
+
+---
+
+## 04. KEY LEARNINGS THIS SESSION (additive to existing learnings list)
+
+- Claude's Higgsfield MCP toolset has no video object-removal/inpainting tool — only generate / upscale / reframe / outpaint / background-removal. Higgsfield's own **web app** has a separate feature, **Kling 3.0 Omni Edit** ("Kling O1 Video Edit" in some UI states), for prompt-based video editing including element removal and local repaint. Bill accesses this directly in-browser; Claude cannot call it via MCP.
+- Kling Omni Edit caps uploaded video at **2160px** on a dimension — native 4K (3840×2160) sources must be downscaled (1080p is fine) before upload.
+- For identity-preserving prompt-based edits: uploading a face reference image helps, but the prompt must explicitly state it's for identity/structure only, not pose — relevant whenever the subject's head/body turns through the clip.
+- The artifact-overlaps-hair problem is a genuine **pixel-level overlap** (confirmed via connected-component + erosion testing up to 15px), not just visual proximity. This is a hard constraint for any 2D pixel-editing tool — Claude's pipeline, Jianying, and likely Kling Omni Edit too, for that exact ~1s window. The only fully reliable fix would be regenerating that slice of the 3D orbit render from source rather than patching the 2D output.
+- Rotating 3D elements (wheel hubcaps) across a moving orbit shot are a poor fit for frame-by-frame 2D pixel-patching — better handled by a proper video-editing/generation model than OpenCV-style masking.
+
+---
+
+## 05. IMMEDIATE NEXT STEPS
+
+1. Bill to confirm/share the Sync.so output that "looks good, no brown spot" so Claude can independently verify and identify which fix actually resolved it.
+2. Bill to attempt the wheel-hub-logo fix via a second Kling Omni Edit pass using the prompt above, and share the result.
+3. Bill to specify exact timestamp + what's wrong with "Muse face, Part 2" so it can be diagnosed.
+4. Once brown spot (full), wheel logo, and Part 2 face quality are all resolved, Part 2 is complete and matches Part 1's already-locked status.
+
+---
+*Generated end of session, June 17–18, 2026 — for continuity into a new chat. Append to the master `hello_mellow_mv_dev` log.*
+
+---  
 # Session Summary — The Muse / Hello Mellow MV (Mercedes Scene, Start/End Frames + Lip-Sync) Date & time: June 16, 2026, 7:35 PM UTC+8
 
 ## Context

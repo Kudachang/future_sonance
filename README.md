@@ -5,11 +5,9 @@ Chronological order, latest first.
 
 ---
 
-### Platform & Distribution Strategy
+### Platform & Distribution Strategy Decided June 19, 2026.
 
 [#platform--distribution-strategy](#platform--distribution-strategy)
-
-Decided June 19, 2026.
 
 As a one-person crew (OPC), distribution is intentionally capped at the following platforms, organized by market. This is the ceiling for manual/semi-manual management — expansion beyond this list requires building AI agents to handle additional channels, not just "trying to do more."
 
@@ -26,11 +24,12 @@ c) Instagram (`future_lab_creative`) — cross-brand promotional/announcement hu
 
 **Revisit this list when:** growth causes visible audience cannibalization between PFTE and Soloist/Muse content on YouTube, or AI agents are built to absorb the operational overhead of additional platforms/channels.
 
+Decided June 19, 2026. By Claude and approved by Bill Ho
+
 ---
 
 Updated Jun 17, 2026.
 
----
 ### Structure
 1. FUTURE is the master brand.
 2. FUTURE SONANCE is the MUSIC LABEL under FUTURE.FUTURE is the English name for 上海炜禾文化传播有限公司

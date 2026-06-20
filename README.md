@@ -5,6 +5,29 @@ Chronological order, latest first.
 
 ---
 
+### Platform & Distribution Strategy
+
+[#platform--distribution-strategy](#platform--distribution-strategy)
+
+Decided June 19, 2026.
+
+As a one-person crew (OPC), distribution is intentionally capped at the following platforms, organized by market. This is the ceiling for manual/semi-manual management — expansion beyond this list requires building AI agents to handle additional channels, not just "trying to do more."
+
+**1) China**
+a) XHS (Xiaohongshu) — short-form video, MV and promotional content
+b) NCM (NetEase Cloud Music) — primary China streaming/distribution, manual upload + entity-transfer to corporate register
+
+**2) Global**
+a) DistroKid — primary global distribution pipeline (Spotify, Apple Music, etc.), routes to HK corporate banking
+b) YouTube — single channel (existing FUTURE SONANCE channel), organized by playlist per sub-brand (PFTE / The Soloist / The Muse) rather than separate channels, to minimize upload/SEO/analytics overhead
+c) Instagram (`future_lab_creative`) — cross-brand promotional/announcement hub for all releases
+
+**Why not separate YouTube channels per sub-brand:** PFTE is search-driven utility content; The Soloist/The Muse are fan-driven identity content. Cleaner algorithmic separation would favor multiple channels, but the operational tax (separate upload schedules, SEO, analytics) outweighs that benefit at OPC scale. Playlists + consistent thumbnail/title conventions per sub-brand are the compromise.
+
+**Revisit this list when:** growth causes visible audience cannibalization between PFTE and Soloist/Muse content on YouTube, or AI agents are built to absorb the operational overhead of additional platforms/channels.
+
+---
+
 Updated Jun 17, 2026.
 
 ---

@@ -5,6 +5,79 @@ In chronological order, latest first.
 
 ---
 
+# Hello Mellow MV Development Log — FINAL ENTRY
+## Status: COMPLETE — Live on NCM and XHS
+
+---
+
+## Context
+
+Final session closing out Part 2 (The Muse + Tiger tribute scene) of the Hello Mellow MV, Soul Heart Club / FUTURE SONANCE / The Soloist project. This entry documents the resolution path after the prior sessions' face/sunglasses/car-distortion struggles, and the final pipeline that shipped the video.
+
+---
+
+## 01. WHAT FINALLY WORKED
+
+**Root cause of two days of failed iterations (Higgsfield + my own prompting):** every attempt relied on `gpt_image_2` with reference images and prompt text only — the trained Soul 2.0 character lock (`c7b3ea36-1c60-4a5d-8e07-ec8b1aa8c6aa`) was never actually invoked correctly. An attempt to invoke it by typing `soul_id:` inline into a prompt string did not work — it was silently ignored, producing the same drift as no Soul reference at all. This is a hard rule for future reference: **Soul 2.0 must be selected natively in the platform UI (a dropdown/picker), not referenced via prompt text, and not assumed reachable via Claude's MCP tool parameters without explicit schema support.**
+
+**What actually fixed the start frame / end frame:** Bill moved to **Loveart** and generated both the start frame and end frame directly there, using the existing locked face/wardrobe assets (character sheet, expression sheet, 360 headshot turnaround, yellow qipao reference) plus a Higgsfield-generated white-background Tiger reference photo as an additional input. This succeeded where ~6 consecutive Higgsfield/GPT Image 2 attempts (via Claude) failed on sunglasses shape, car geometry ("pancaking"), and body proportions ("60 pounds" drift).
+
+**Video generation:** start/end frames from Loveart uploaded to Higgsfield, then run through Kling 3.0 for the 360-degree orbit shot (car as fixed center axis, consistent with Part 1's established camera language). Kling 3.0 standard mode was visibly low quality ("looks like AI video 2024" — Bill's read); **Kling 3.0 Pro mode** was a significant step up. Seedance 2.0 was also tested at 1080p with an explicit "single continuous one-shot, no cuts" prompt constraint for direct comparison.
+
+**Final finishing pass:** Bill completed the last refinement steps directly using **Higgsfield's Video Edit and AI Director** features in the web app — confirmed by Bill as excellent tools that closed out remaining issues (this picks up from the brown-spot/wheel-logo/traffic-light fixes documented in the prior session's log, which had been bottlenecked on Claude's MCP toolset lacking any video-editing capability). These are NOT exposed via Claude's MCP connection to Higgsfield — only generation, upscale, reframe, outpaint, background-removal, and 3D/audio tools are available via MCP. Video Edit and AI Director live exclusively in the Higgsfield web app.
+
+---
+
+## 02. KEY LEARNINGS FOR FUTURE AIGC VIDEO PROJECTS
+
+1. **Reference-image + prompt conditioning (GPT Image 2 style) is fundamentally probabilistic, not deterministic.** No amount of prompt refinement reliably fixes a specific recurring failure (e.g., sunglasses rendering as oval/square instead of round) because the model is only ever being *nudged*, never *constrained*. Two days and ~8 generation attempts confirmed this empirically.
+
+2. **A trained character lock (Soul 2.0, or equivalent) is only as good as your ability to actually invoke it correctly.** Confirm the platform's real invocation path (native UI selection) before relying on it, and don't assume an AI agent's tool access can reach platform-specific binding mechanisms not exposed in the tool's schema.
+
+3. **When one platform is fighting you, switching tools is a legitimate and often faster fix than continuing to refine prompts on a platform that keeps failing the same way.** Loveart succeeded where repeated Higgsfield/GPT Image 2 attempts failed on the same task, using largely the same source reference images.
+
+4. **Higgsfield's own uploaded-media pipeline (via Claude's MCP `media_upload` tool) had a reliability problem this project:** multiple images uploaded by Claude via its own `media_upload` tool call landed in a broken backend state (rejected by every model, including a direct CDN fetch returning 403) while the *same kind of content* uploaded by Bill directly through the Higgsfield web client or chat-attachment pipeline worked reliably. **Going forward: have Bill upload images directly rather than routing through Claude's upload tool, when reliability matters.**
+
+5. **Dense, multi-subject scene requests (e.g., "13 cats in the car") can break model coherence across every dimension simultaneously** — not just failing the new element (cats), but degrading unrelated locked elements (car geometry, body proportions) in the same generation. When a complex addition fails badly, dialing back to the last-known-good simpler composition is faster than iterating on the dense version.
+
+6. **Never chain edits on AI-generated output** — regenerating from an already-rendered image as a "reference" (even when not explicitly using an edit/inpaint tool) reintroduces degradation, visible as a loss of detail/sharpness across iterations. Confirmed again this session: feeding the locked composition back in as a "fix only the glasses" reference produced visibly worse results than starting fresh from original clean source images each time.
+
+7. **Kling 3.0 Pro mode is meaningfully better than standard mode for complex/detailed scenes** — std mode produced visibly dated/lower-quality motion and rendering on this orbit shot; Pro mode was the version that held up.
+
+8. **Higgsfield's web-app-only features (Video Edit, AI Director, Kling Omni Edit) are consistently the tools that closed out final-mile fixes this project** — brown spot removal, wheel logo correction, and final polish all happened in the web UI, not via any MCP-accessible tool. For future projects: budget time for a manual web-app finishing pass as a known, expected stage of the pipeline, not an exception.
+
+---
+
+## 03. FINAL PIPELINE SUMMARY (for future reference / GitHub archival)
+
+```
+Character/wardrobe/car assets locked (Higgsfield Soul 2.0 + reference elements)
+        ↓
+Start frame + end frame generation: MOVED to Loveart after Higgsfield/GPT Image 2 
+failures on face fidelity, sunglasses shape, and car geometry
+        ↓
+Frames uploaded to Higgsfield (manually, by Bill, to avoid the broken-upload issue)
+        ↓
+360-orbit video generation: Kling 3.0 Pro (car as fixed center axis)
+        ↓
+Final polish: Higgsfield Video Edit + AI Director (web app only, no MCP access)
+        ↓
+Lip-sync: Sync.so (per prior session's resolved pipeline)
+        ↓
+SHIPPED: NCM + XHS
+```
+
+---
+
+## 04. OUTCOME
+
+Hello Mellow MV (Soul Heart Club, The Soloist / The Muse) — **complete and live** on NetEase Cloud Music and Xiaohongshu (XHS) as of this session.
+
+---
+*Generated as the final entry in the `hello_mellow_mv_dev` log series, for GitHub archival as a learnings reference for future AIGC video projects.*
+
+---
+
 # Session Summary — The Muse / Hello Mellow MV (Part 2: Brown Spot Cleanup, Wheel Logo, Sync.so)
 Date: June 17–18, 2026
 

@@ -4,6 +4,60 @@
 
 ---
 
+# NCM 作品认领转移 — KD The Soloist → 上海炜禾文化传播有限公司
+
+**Date:** Sunday, August 2, 2026
+**Flow ID:** 1294879
+**Status at time of logging:** 审核中 (under review)
+
+## Background
+
+Attempting to transfer 16 works by "KD The Soloist" (personal NetEase Cloud Music artist account, KD_THE_SOLOIST) to the company licensor account (Shanghai Weihe Cultural Communication Co., Ltd. / 上海炜禾文化传播有限公司) via NCM's Licensor Service Platform "work claim" (作品认领) flow.
+
+**Works involved (16 total):**
+- **SOLO LINE** (album ID 372683576) — 13 tracks, including: No Police No Thieves, Paper Daggers, Order in Chaos, Creative Power, True Through It All, Solo Line, Flow
+- **SOLO HEART CLUB** (album ID 375882517) — 3 tracks, including: Hello Mellow, Il dolce far niente, Blue Expanse
+
+Rights split filed: 录音授权 (recording) 100%, 表演者授权 (performer) 100%, 词授权 (lyrics) 0%, 曲授权 (composition) 0%. Payment mode: 会员包2.0.
+
+Company's existing NCM docking contract (编号 431A202605025490, signed 2026-05-24) only covers FUTURE SONANCE works — did not originally include KD The Soloist.
+
+## Rounds 1–2: Rejected, no reason given
+
+Both submissions returned only "已驳回" (rejected) with no reason code, explanation, or resubmission guidance — confirmed via direct inspection of the claim-detail page (no hidden tooltip/detail data in the DOM).
+
+## Diagnosis (via Kimi)
+
+NCM's audit logic requires a complete **a → b → c** chain of documentation:
+`a (何子衡 / KD The Soloist, original upstream rights holder) → b (Shanghai Weihe) → c (NetEase Cloud Music)`
+
+Four causes identified in the rejected submissions:
+
+1. **Rights-percentage mismatch** — submitted materials stated "含词曲权" (includes lyrics/composition rights) while the platform form filed 0% for both, triggering an automatic mismatch flag.
+2. **RMB 1 nominal consideration** — three separate documents listed a ¥1 transfer price, reading as a non-genuine transaction and triggering extra risk review.
+3. **"Same actual controller / legal representative" language** — documents explicitly stated the personal and company identities share a legal representative / actual controller, which both raised scrutiny and worked against the intended identity separation between Bill and KD The Soloist.
+4. **Inconsistent song counts across files** — some documents listed 15 works (missing "Hello Mellow"), others 16, with a misspelling ("Blue Expense") in one.
+
+## Corrective actions taken (submitted 2026-08-03)
+
+- Re-drafted upstream authorization document: reframed as "authorization to manage" rather than "transfer," rights scope matched exactly to platform filing (100/100/0/0), ¥1 consideration removed, "same legal rep/controller" language removed
+- Identity documentation (回乡证) attached for KYC
+- Full 16-song Excel using platform template, with correct song IDs, authorization dates (2026/8/3–2029/8/2), and rights percentages
+- Confirmed downstream file (b→c) is the correct company docking contract (431A202605025490)
+- Resubmitted on existing flowId 1294879 (status was "待修改," edited in place rather than creating a new application)
+
+## Result
+
+Status moved from "待修改" to **审核中** (under review) same day. Awaiting outcome.
+
+## Open considerations
+
+- The upstream authorization language needs to state the factual link between Bill (何子衡) and the KD The Soloist account as minimally as NCM's audit requires — without merged-identity phrasing ("法定代表人," "同一实控人") that both raises platform scrutiny and undercuts the intended separation between Bill/FUTURE and the KD The Soloist identity.
+- If rejected again: escalate via NCM's 企业微信 business support (工作日 10:00–19:00) citing flowId 1294879 directly, and ask specifically about a "合同变更" (contract amendment) path as an alternative to repeated "作品认领" submissions.
+- A physical ID number (回乡证) was included in submitted materials — handle copies of this documentation with care.
+
+---
+
 # PFTE: PRESCRIPTION FOR THE EARS
 ## Strategic Framework — Working Document
 ### Version 1.1 | June 25, 2026

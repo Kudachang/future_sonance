@@ -4,6 +4,18 @@
 
 ---
 
+# Release Log: "Vibing" — KD The Soloist
+**Logged:** 3 August 2026
+
+- **Label:** FUTURE SONANCE | **Distributor:** DistroKid | **UPC:** 882436540172
+- **Release date:** 3 August 2026 | **Platforms:** 23 stores/streaming
+- **Genre:** Mellow R&B | **Sensitivity:** Non-sensitive, cleared for promo
+- **Context:** Originally slated for Solo Heart Club album; released as a standalone single instead of waiting on stalled NCM entity transfer
+
+**Follow-up:** Confirm NCM entity transfer status before further Solo Heart Club releases.
+
+---
+
 # NCM 作品认领转移 — KD The Soloist → 上海炜禾文化传播有限公司
 
 **Date:** Sunday, August 2, 2026

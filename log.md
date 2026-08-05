@@ -4,6 +4,39 @@
 
 ---
 
+# ACTIVITY LOG — August 6, 2026
+
+## Future Project: NCM Electronic Contest — The Muse
+**Status:** Planned (not yet started)
+
+**Opportunity:** NetEase Cloud Music (网易云音乐) call-for-submissions — electronic music contest.
+
+**Contest Requirements**
+- Genre: Electronic (Synth Pop, House, Techno, Future Bass, Nu Disco)
+- BPM: 110–128
+- Duration: ≥2 min
+- Must be created after 1 Jan 2026
+- Max 3 submissions per person
+- Non-musicians must register on platform first
+
+**Plan**
+- Artist: The Muse™
+- Style: Jazz + Future Bass + Techno fusion
+- Track: TBD — not yet started
+
+**Next Steps**
+- Confirm BPM target within 110–128 range at production stage
+- Check contest deadline / detailed rules page (not yet reviewed)
+- Register on NCM platform if required before submission
+- Produce track, then submit
+
+---
+*Logged: August 6, 2026, 12:32am UTC+8*
+*Claude (Anthropic) in collaboration with Bill Ho, FUTURE™*
+*上海炜禾文化传播有限公司*
+
+---
+
 # Release Log: "Vibing" — KD The Soloist
 **Logged:** 3 August 2026
 

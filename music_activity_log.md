@@ -6,6 +6,34 @@
 
 # ACTIVITY LOG — August 6, 2026
 
+## Release: "Hello Mellow Vodka Jello" (feat. The Muse) — KD The Soloist
+
+**Label:** FUTURE SONANCE | **Artist:** KD The Soloist ft. The Muse
+
+### DistroKid (Global)
+- **Status:** Queued — sent to stores today
+- **Upload date:** August 6, 2026
+- **Release date:** August 6, 2026
+- **UPC:** 881839111835
+- **Platforms:** Available soon on 22 streaming platforms and stores
+
+### NCM (网易云音乐 — Licensor Service Platform)
+- **Status:** 待审核 (pending review)
+- **Album:** Hello Mellow Vodka Jello
+- **Artist listed:** KD The Soloist / The Muse
+- **Submitted:** 2026-08-06
+
+**Follow-up:** Monitor NCM review outcome; confirm approval before promoting on China-facing channels.
+
+---
+*Logged: August 6, 2026*
+*Claude (Anthropic) in collaboration with Bill Ho, FUTURE™*
+*上海炜禾文化传播有限公司*
+
+---
+
+# ACTIVITY LOG — August 6, 2026
+
 ## Future Project: NCM Electronic Contest — The Muse
 **Status:** Planned (not yet started)
 
